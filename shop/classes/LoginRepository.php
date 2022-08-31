@@ -63,6 +63,8 @@ class LoginRepository implements Entity {
         	if(password_verify($password, $result[0]['usePassword'])){
 		        $_SESSION['right'] = $result[0]['useRight'];
 		        $connect = true;
+                echo($result[0]['usePassword']);
+
 	        } else {
 		        $_SESSION['right'] = null;
 		        $connect = false;
