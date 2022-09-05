@@ -64,6 +64,9 @@ class MainController {
             case 'shop':
                 $link = new ShopController();
                 break;
+            case 'basket':
+                $link = new BasketController();
+                break;
             default:
                 $link = new HomeController();
                 break;
