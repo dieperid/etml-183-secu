@@ -31,13 +31,7 @@ class BasketController extends Controller {
         else
             $_SESSION["basket"] += [$_GET["id"] => 1];
 
-        $view = file_get_contents('view/page/basket/basket.php');
-
-        ob_start();
-        eval('?>' . $view);
-        $content = ob_get_clean();
-
-        return $content;
+        header("location: index.php?controller=basket&action=find");
     }
 
     /**
@@ -64,8 +58,10 @@ class BasketController extends Controller {
     private function findAction() {
 
         $shopRepository = new ShopRepository();
-        foreach($_SESSION["basket"] as $item => $value) {
-            $products[] = $shopRepository->findOne($item);
+        if(isset($_SESSION["basket"])){
+            foreach($_SESSION["basket"] as $item => $value) {
+                $products[] = $shopRepository->findOne($item);
+            }
         }
 
         $view = file_get_contents('view/page/basket/basket.php');
