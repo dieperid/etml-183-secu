@@ -13,6 +13,7 @@
 			echo '<th>Prix</th>';
 			echo '<th>Quantité</th>';
 			echo '<th>Sous-total</th>';
+			echo '<th></th>';
 			echo '</tr>';
 			foreach ($products as $product) {
 				echo '<tr>
@@ -20,6 +21,15 @@
 				<td> CHF '. $product[0]['proPrice'] .'</td>
 				<td>'. $_SESSION["basket"][$product[0]['idProduct']]. '</td>
 				<td> CHF '. $_SESSION["basket"][$product[0]['idProduct']] * $product[0]['proPrice'] . '</td>';
+				?>
+				<td>
+				<a class="btn btn-default" href="index.php?controller=basket&action=delete&id=<?= $product[0]['idProduct'] ?>">
+					<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+				<a onclick="return confirm(\'Etes-vous sûr ? \')" class="btn btn-default"
+				href="index.php?controller=basket&action=delete&id=<?= $product[0]['idProduct'] ?>">
+					<span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+			</td>
+				<?=
 				$total += $_SESSION["basket"][$product[0]['idProduct']] * $product[0]['proPrice'];
 			}
 			echo '<tr>

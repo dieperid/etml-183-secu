@@ -73,4 +73,12 @@ class BasketController extends Controller {
         return $content;
 
     }
+
+
+    private function deleteAction(){
+
+        unset($_SESSION["basket"][$_GET['id']]);
+
+        header("location: index.php?controller=basket&action=find");
+    }
 }
