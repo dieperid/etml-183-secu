@@ -60,11 +60,11 @@ class LoginRepository implements Entity {
         sleep(1);
 
         $result = $this->findOne($login);
+
         if(isset($result) && count($result)>0){
             if(password_verify($password, $result[0]['usePassword'])){
                 $_SESSION['right'] = $result[0]['useRight'];
                 $connect = true;
-
             } else {
                 $_SESSION['right'] = null;
                 $connect = false;
