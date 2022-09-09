@@ -12,7 +12,7 @@
 			echo '<p>' . $product[0]['proDescription'] . '</p>';
 			echo '<p>Encore : ' . $product[0]['proQuantity'] . ' en stock</p>';
 			if($product[0]['proQuantity'] > 0)
-				echo '<a href="index.php?controller=basket&action=addToBasket&id=' . $product[0]['idProduct'] . '"">Ajouter au panier</a>';
+				echo '<a class="btn btn-default" href="index.php?controller=basket&action=addToBasket&id=' . $product[0]['idProduct'] . '&quant= '. $product[0]['proQuantity'] .'"">Ajouter au panier</a>';
 		?>
 		</div>
 		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">

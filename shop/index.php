@@ -16,6 +16,7 @@ if ($debug) {
 }
 
 include 'controller/Controller.php';
+include 'controller/OrderController.php';
 include 'controller/BasketController.php';
 include 'controller/AdminController.php';
 include 'controller/HomeController.php';
@@ -66,6 +67,9 @@ class MainController {
                 break;
             case 'basket':
                 $link = new BasketController();
+                break;
+            case 'order':
+                $link = new OrderController();
                 break;
             default:
                 $link = new HomeController();

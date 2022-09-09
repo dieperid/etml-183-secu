@@ -1,6 +1,6 @@
 <?php
 
-class BasketController extends Controller {
+class OrderController extends Controller {
 
     /**
      * Dispatch current action
@@ -40,9 +40,9 @@ class BasketController extends Controller {
      *
      * @return string
      */
-    private function listAction() {
+    private function deliveryAction() {
 
-        $view = file_get_contents('view/page/basket/basket.php');
+        $view = file_get_contents('view/page/order/delivery.php');
 
         ob_start();
         eval('?>' . $view);
@@ -72,45 +72,5 @@ class BasketController extends Controller {
 
         return $content;
 
-    }
-
-
-    /**
-     * Delete items in the basket Action
-     * 
-     */
-    private function deleteAction(){
-
-        unset($_SESSION["basket"][$_GET['id']]);
-
-        header("location: index.php?controller=basket&action=find");
-    }
-    
-    /**
-     * Add quantity to an item on the basket Action
-     * 
-     */
-    private function addAction(){
-
-        if($_SESSION["basket"][$_GET['id']] < $_GET['quant']){
-            $_SESSION["basket"][$_GET['id']]++;
-        }
-
-        header("location: index.php?controller=basket&action=find");
-    }
-
-    /**
-     * Remove quantity to an item on the basket Action
-     * 
-     */
-    private function removeAction(){
-
-        if($_SESSION["basket"][$_GET['id']] > 1){
-            $_SESSION["basket"][$_GET['id']]--;
-        }
-        else
-            unset($_SESSION["basket"][$_GET['id']]);
-
-        header("location: index.php?controller=basket&action=find");
     }
 }
