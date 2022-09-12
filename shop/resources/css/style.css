@@ -24,3 +24,24 @@ table {
 .command{
   margin-top: 5%;
 }
+
+.flex-container{
+  display : flex;
+  flex-direction: wrap;
+  width:100%;
+}
+
+.flex-container2{
+  display : flex;
+  flex-direction: wrap;
+  width:100%;
+}
+
+.flex-container p{
+  margin-right: auto;
+}
+
+p{
+  margin: 5px;
+  margin-left:0px;
+}
