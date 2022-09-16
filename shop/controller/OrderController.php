@@ -74,22 +74,43 @@ class OrderController extends Controller {
      * @return string
      */
     private function summaryAction() {
+        $reg = "/^[A-Za-zÀ-ÿ' ]*$/";
+        $regNPA = "/^[0-9]{4}*$/";
 
-        $_SESSION["summary"] = $_POST;
+        $errors = array();
 
-        $shopRepository = new ShopRepository();
-        if(isset($_SESSION["basket"])){
-            foreach($_SESSION["basket"] as $item => $value) {
-                $products[] = $shopRepository->findOne($item);
+        if(!preg_match($reg, $_POST["name"]))
+            array_push($errors, "name");
+        if(!preg_match($reg, $_POST["firstname"]))
+            array_push($errors, "firstname");
+
+        if(!preg_match($reg, $_POST["street"]))
+            array_push($errors, "street");
+        if(!preg_match($regNPA, $_POST["npa"]))
+            array_push($errors, "npa");
+        if(!preg_match($reg, $_POST["locality"]))
+            array_push($errors, "street");
+
+        var_dump($errors);
+
+        if($errors == null)
+        {
+            $_SESSION["summary"] = $_POST;
+
+            $shopRepository = new ShopRepository();
+            if(isset($_SESSION["basket"])){
+                foreach($_SESSION["basket"] as $item => $value) {
+                    $products[] = $shopRepository->findOne($item);
+                }
             }
+
+            $view = file_get_contents('view/page/order/summary.php');
+
+            ob_start();
+            eval('?>' . $view);
+            $content = ob_get_clean();
+
+            return $content;
         }
-
-        $view = file_get_contents('view/page/order/summary.php');
-
-        ob_start();
-        eval('?>' . $view);
-        $content = ob_get_clean();
-
-        return $content;
     }
 }
