@@ -44,14 +44,23 @@ class LoginController extends Controller {
      */
     private function loginAction() {
 
-        $login = $_POST['login'];
-        $password = $_POST['password'];
 
-        $loginRepository = new LoginRepository();
-        $result = $loginRepository->login($login, $password);
+        /**
+         * A METTRE DANS LE RAPPORT
+         * EVITER LES INJECTIONS SQL
+        */
+        if(!str_contains($_POST['login'], "'") && !str_contains($_POST['password'], "'")){
 
+            $login = $_POST['login'];
+            $password = $_POST['password'];
 
-        $text = "Vous n'êtes pas connnecté ! ";
+            $loginRepository = new LoginRepository();
+            $result = $loginRepository->login($login, $password);
+        }
+        else{
+            $text = "Vous n'êtes pas connnecté ! ";
+            $result = null;
+        }
 
         if($result == true){
             $text = "Vous êtes connecté ! ";

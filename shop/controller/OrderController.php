@@ -74,27 +74,37 @@ class OrderController extends Controller {
      * @return string
      */
     private function summaryAction() {
+
+        $redirectPage;
+
         $reg = "/^[A-Za-zÀ-ÿ' ]*$/";
-        $regNPA = "/^[0-9]{4}*$/";
+        $regNPA = "/^[0-9]{4}$/";
+        $regStreetNB = "/^[0-9]{2,3}[A-z]?$/";
+        $regMail = "/^[A-z][A-z-]*(\.[A-z]{1,})*[@][A-z]{1,}\.[A-z]{2,}$/";
+        $regPhone = "/^([0][1-9][0-9](\s|)[0-9][0-9][0-9](\s|)[0-9][0-9](\s|)[0-9][0-9])$|^(([0][0]|\+)[1-9][0-9](\s|)[0-9][0-9](\s|)[0-9][0-9][0-9](\s|)[0-9][0-9](\s|)[0-9][0-9])$/";
 
         $errors = array();
 
+        if($_POST["title"] != "Monsieur" && $_POST["title"] != "Madame")
+            array_push($errors, "Titre");
         if(!preg_match($reg, $_POST["name"]))
-            array_push($errors, "name");
+            array_push($errors, "Nom");
         if(!preg_match($reg, $_POST["firstname"]))
-            array_push($errors, "firstname");
-
+            array_push($errors, "Prénom");
         if(!preg_match($reg, $_POST["street"]))
-            array_push($errors, "street");
+            array_push($errors, "Rue");
+        if(!preg_match($regStreetNB, $_POST["streetNumber"]))
+            array_push($errors, "N° de rue");
         if(!preg_match($regNPA, $_POST["npa"]))
-            array_push($errors, "npa");
+            array_push($errors, "NPA");
         if(!preg_match($reg, $_POST["locality"]))
-            array_push($errors, "street");
+            array_push($errors, "Localité");
+        if(!preg_match($regMail, $_POST["mail"]))
+            array_push($errors, "Mail");
+        if(!preg_match($regPhone, $_POST["phone"]))
+            array_push($errors, "Téléphone");
 
-        var_dump($errors);
-
-        if($errors == null)
-        {
+        if($errors == null){
             $_SESSION["summary"] = $_POST;
 
             $shopRepository = new ShopRepository();
@@ -103,14 +113,22 @@ class OrderController extends Controller {
                     $products[] = $shopRepository->findOne($item);
                 }
             }
+            $redirectPage = "summary.php";
+        }
+        else{
 
-            $view = file_get_contents('view/page/order/summary.php');
+            echo 'Erreur dans le(s) champ(s) :';
+            foreach($errors as $value){echo "$value";}
+
+            $redirectPage = "customer-info.php";
+        }
+
+        $view = file_get_contents("view/page/order/$redirectPage");
 
             ob_start();
             eval('?>' . $view);
             $content = ob_get_clean();
 
             return $content;
-        }
     }
 }

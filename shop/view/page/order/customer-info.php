@@ -10,7 +10,7 @@
         <input type="text" id="streetNumber" name="streetNumber" value="" placeholder="N°" required><br><br>
         <input type="text" id="npa" name="npa" value="" placeholder="NPA" required>
         <input type="text" id="locality" name="locality" value="" placeholder="Localité" required><br><br>
-        <input type="text" id="mail" name="mail" value="" placeholder="Adresse mail" required>
+        <input type="email" id="mail" name="mail" value="" placeholder="Adresse mail" required>
         <input type="text" id="phone" name="phone" value="" placeholder="Téléphone" required><br><br>
 		<input class="btn btn-default command" type="submit" value="Suivant">
 	</form>
