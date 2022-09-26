@@ -51,11 +51,11 @@
 	foreach($products as $product){
         echo '<tr>
             <td>'. $product[0]['proName'] .'</td>
-            <td> CHF '. $product[0]['proPrice'] .'</td>
+            <td> CHF '. number_format($product[0]['proPrice'],2) .'</td>
             <td>'. $_SESSION["basket"][$product[0]['idProduct']]. '</td>
-            <td> CHF '. $_SESSION["basket"][$product[0]['idProduct']] * $product[0]['proPrice'] . '</td>
+            <td> CHF '. bcmul($_SESSION["basket"][$product[0]['idProduct']],$product[0]['proPrice'],2) . '</td>
             </tr>';
-        $total += $_SESSION["basket"][$product[0]['idProduct']] * $product[0]['proPrice'];
+        $total += bcmul($_SESSION["basket"][$product[0]['idProduct']], $product[0]['proPrice'],2);
     }
 
 	if($_SESSION['delivery'] == 'POSTE'){
@@ -78,7 +78,7 @@
 			<td>Total</td>
             <td></td>
             <td></td>
-            <td>CHF ' . $total . '</td>
+            <td>CHF ' . number_format($total,2) . '</td>
             </tr>';
 
 	if($_SESSION['payment'] == 'FACTURE'){
@@ -110,8 +110,9 @@
             <td>Total à payer</td>
             <td></td>
             <td></td>
-            <td>CHF ' . $total . '</td>
+            <td>CHF ' . number_format($total,2) . '</td>
             </tr>';
+		$total = number_format($total,2);
 	?>
 
 	</table>
