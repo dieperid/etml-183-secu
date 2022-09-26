@@ -114,7 +114,7 @@
             </tr>';
 		$total = number_format($total,2);
 	?>
-
 	</table>
+	<a class="btn btn-default command" href="index.php?controller=order&action=validOrder">Envoyer la commande</a>
 	</div>
 </div>

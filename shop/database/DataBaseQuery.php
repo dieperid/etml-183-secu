@@ -87,7 +87,7 @@ class DataBaseQuery
      */
     public function insert($table, $columns, $values) {
 
-        $query = 'INSERT INTO ' . $table . ' ' . $columns . " VALUES " . $values ;
+        $query = 'INSERT INTO ' . $table . ' (' . $columns . ") VALUES (" . $values .")" ;
 
         $req = $this->connection->prepare($query);
 

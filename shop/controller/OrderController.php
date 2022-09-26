@@ -1,5 +1,7 @@
 <?php
 
+include_once 'database/DataBaseQuery.php';
+
 class OrderController extends Controller {
 
     /**
@@ -113,6 +115,7 @@ class OrderController extends Controller {
                     $products[] = $shopRepository->findOne($item);
                 }
             }
+            var_dump($_SESSION);
             $redirectPage = "summary.php";
         }
         else{
@@ -130,5 +133,18 @@ class OrderController extends Controller {
         $content = ob_get_clean();
 
         return $content;
+    }
+
+    /**
+     * 
+     */
+    public function validOrderAction() {
+        $request = new DataBaseQuery();
+
+        $request->insert("t_order","idUser,moyLiv,moyPay", 1 . ",'" . $_SESSION["delivery"] . "','" . $_SESSION["payment"]."'");
+
+        // foreach($_SESSION['basket'] as $item => $value){
+        //     $request->insert("t_ordered","fkOrder, fkProduct, itemQuantity", 1);
+        // }
     }
 }
