@@ -28,18 +28,26 @@ class AdminController extends Controller {
      * @return string
      */
     private function indexAction() {
+        /**
+         * A METTRE DANS LE RAPPORT
+         * RESTRICTION SUR LES LIENS
+        */
+        if(isset($_SESSION['right']) && $_SESSION['right'] == 'admin') {
+            $adminRepository = new AdminRepository();
+            $products = $adminRepository->findAll();
 
-        $adminRepository = new AdminRepository();
-        $products = $adminRepository->findAll();
-
-        $view = file_get_contents('view/page/admin/index.php');
+            $view = file_get_contents('view/page/admin/index.php');
 
 
-        ob_start();
-        eval('?>' . $view);
-        $content = ob_get_clean();
+            ob_start();
+            eval('?>' . $view);
+            $content = ob_get_clean();
 
-        return $content;
+            return $content;
+       }
+       else {
+            header("location:index.php");
+       }
     }
 
     /**
@@ -92,7 +100,6 @@ class AdminController extends Controller {
      * @return string
      */
     private function insertAction() {
-
 
         $productName = $_POST['productName'];
         $productDescription = $_POST['productDescription'];
@@ -215,19 +222,25 @@ class AdminController extends Controller {
 
     public function listUsersAction(){
 
-        $field = $_GET['field'];
+        /**
+         * A METTRE DANS LE RAPPORT
+         * RESTRICTION SUR LES LIENS
+        */
+        if(isset($_SESSION['right']) && $_SESSION['right'] == 'admin') {
+            $field = $_GET['field'];
 
-        $adminRepository = new AdminRepository();
-        $users=$adminRepository->rawQuery("select ".$field." FROM t_user",PDO::FETCH_NUM);
+            $adminRepository = new AdminRepository();
+            $users=$adminRepository->rawQuery("select ".$field." FROM t_user",PDO::FETCH_NUM);
 
-        $view = file_get_contents('view/page/admin/listUsers.php');
+            $view = file_get_contents('view/page/admin/listUsers.php');
 
-        ob_start();
-        eval('?>' . $view);
+            ob_start();
+            eval('?>' . $view);
 
-        return ob_get_clean();
-
-
+            return ob_get_clean();
+        }
+        else{
+            header("location: index.php");
+        }
     }
-
 }

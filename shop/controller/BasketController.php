@@ -113,4 +113,11 @@ class BasketController extends Controller {
 
         header("location: index.php?controller=basket&action=find");
     }
+
+    /**
+     * Method to clear the basket
+     */
+    public function clearBasket(){
+        $_SESSION['basket'] = null;
+    }
 }

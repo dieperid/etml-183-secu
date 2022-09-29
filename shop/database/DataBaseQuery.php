@@ -122,4 +122,12 @@ class DataBaseQuery
         $req = $this->connection->prepare($query);
         return $req->execute();
     }
+
+    /**
+     * Method to get the last id insert
+     */
+    public function getLastId(){
+
+        return $this->connection->lastInsertId();
+    }
 }

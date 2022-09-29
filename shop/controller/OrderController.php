@@ -77,7 +77,7 @@ class OrderController extends Controller {
      */
     private function summaryAction() {
 
-        $redirectPage;
+        $redirectPage = "";
 
         $reg = "/^[A-Za-zÀ-ÿ' ]*$/";
         $regNPA = "/^[0-9]{4}$/";
@@ -115,7 +115,6 @@ class OrderController extends Controller {
                     $products[] = $shopRepository->findOne($item);
                 }
             }
-            var_dump($_SESSION);
             $redirectPage = "summary.php";
         }
         else{
@@ -139,12 +138,35 @@ class OrderController extends Controller {
      * 
      */
     public function validOrderAction() {
+        $basket = new BasketController();
         $request = new DataBaseQuery();
 
-        $request->insert("t_order","idUser,moyLiv,moyPay", 1 . ",'" . $_SESSION["delivery"] . "','" . $_SESSION["payment"]."'");
+        if($_SESSION['numOrder'] == null){
+            $request->insert("t_order","idUser,moyLiv,moyPay", 1 . ",'" . $_SESSION["delivery"] . "','" . $_SESSION["payment"]."'");
 
-        // foreach($_SESSION['basket'] as $item => $value){
-        //     $request->insert("t_ordered","fkOrder, fkProduct, itemQuantity", 1);
-        // }
+            $lastID = $request->getLastId();
+
+            foreach($_SESSION['basket'] as $item => $value){
+                $request->insert("t_ordered","fkOrder, fkProduct, itemQuantity", $lastID .",". $item .",". $value);
+                $request->update("t_product","proQuantity = proQuantity - 1","idProduct = $item");
+            }
+            $_SESSION['numOrder'] = $lastID;
+        }
+
+        $shopRepository = new ShopRepository();
+            if(isset($_SESSION["basket"])){
+                foreach($_SESSION["basket"] as $item => $value) {
+                    $products[] = $shopRepository->findOne($item);
+                }
+            }
+
+        $view = file_get_contents("view/page/order/order-confirmed.php");
+
+        ob_start();
+        eval('?>' . $view);
+        $content = ob_get_clean();
+
+        $basket->clearBasket();
+        return $content;
     }
 }

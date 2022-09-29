@@ -44,7 +44,6 @@ class LoginController extends Controller {
      */
     private function loginAction() {
 
-
         /**
          * A METTRE DANS LE RAPPORT
          * EVITER LES INJECTIONS SQL
@@ -63,6 +62,8 @@ class LoginController extends Controller {
         }
 
         if($result == true){
+            $_SESSION['right'] = $_POST['login'];
+            $_SESSION['username'] = $_POST['login'];
             $text = "Vous êtes connecté ! ";
         }
 
