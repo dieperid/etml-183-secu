@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * ETML
+ * Date: 01.06.2017
+ * Shop
+ */
+
 include_once 'database/DataBaseQuery.php';
 
 class OrderController extends Controller {
@@ -135,7 +141,7 @@ class OrderController extends Controller {
     }
 
     /**
-     * 
+     * Method to valid the order
      */
     public function validOrderAction() {
         $basket = new BasketController();
@@ -144,6 +150,7 @@ class OrderController extends Controller {
         if($_SESSION['numOrder'] == null){
             $request->insert("t_order","idUser,moyLiv,moyPay", 1 . ",'" . $_SESSION["delivery"] . "','" . $_SESSION["payment"]."'");
 
+            // Récupération du dernier ID insérer
             $lastID = $request->getLastId();
 
             foreach($_SESSION['basket'] as $item => $value){
