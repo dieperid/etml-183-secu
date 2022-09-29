@@ -131,6 +131,9 @@ class OrderController extends Controller {
             $redirectPage = "customer-info.php";
         }
 
+        if(isset($_SESSION['numOrder'])){
+            unset($_SESSION['numOrder']);
+        }
         $view = file_get_contents("view/page/order/$redirectPage");
 
         ob_start();
@@ -147,7 +150,7 @@ class OrderController extends Controller {
         $basket = new BasketController();
         $request = new DataBaseQuery();
 
-        if($_SESSION['numOrder'] == null){
+        if(!isset($_SESSION['numOrder'])){
             $request->insert("t_order","idUser,moyLiv,moyPay", 1 . ",'" . $_SESSION["delivery"] . "','" . $_SESSION["payment"]."'");
 
             // Récupération du dernier ID insérer
