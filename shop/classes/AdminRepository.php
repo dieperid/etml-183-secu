@@ -81,8 +81,8 @@ class AdminRepository implements Entity {
             $request = new DataBaseQuery();
 
             $table = 't_product';
-            $columns = '(idProduct, proName, proDescription, proPrice, proQuantity, proImage, fkCategory)';
-            $values = "(NULL, '$name', '$description', $price, $quantity, '$file', $idCategory)";
+            $columns = 'idProduct, proName, proDescription, proPrice, proQuantity, proImage, fkCategory';
+            $values = "NULL, '$name', '$description', $price, $quantity, '$file', $idCategory";
 
             return $request->insert($table, $columns, $values);
         } 
