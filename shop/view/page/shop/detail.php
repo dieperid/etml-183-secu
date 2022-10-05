@@ -17,7 +17,11 @@
 		</div>
 		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 		<?php
-			echo '<img src="resources/image/' . $product[0]['proImage'] . '"/>';
+		/**
+		 * A METTRE DANS LE RAPPORT
+		 * AFFICHAGE DU WATERMARK
+		 */
+			echo '<div class="imageProduct"><img src="view/page/shop/watermark.php?jpg=../../../resources/image/' . $product[0]['proImage'] . '"/></div>';
 		?>
 		</div>
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
