@@ -51,4 +51,21 @@ class HomeController extends Controller {
 
         return $content;
     }
+
+    /**
+     * Display Basket Action
+     *
+     * @return string
+     */
+    private function basketAction() {
+
+        $view = file_get_contents('view/page/basket/BasketController.php');
+
+
+        ob_start();
+        eval('?>' . $view);
+        $content = ob_get_clean();
+
+        return $content;
+    }
 }

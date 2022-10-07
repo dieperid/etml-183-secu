@@ -7,12 +7,12 @@
  */
 
 $MM_CONFIG = array(
-    "database" => array(
-        "dbname"    => "db_shop",
-        "username"  => "root",
-        "password"  => "root",
-        "host"      => "localhost",
-        "port"      => "3306",
-        "charset"   => "utf8"
+    'database' => array(
+        'dbname'    => 'db_shop',
+        'username'  => 'db150',
+        'password'  => 'Pa$$w0rd',
+        'host'      => 'localhost',
+        'port'      => '3306',
+        'charset'   => 'utf8'
     )
 );

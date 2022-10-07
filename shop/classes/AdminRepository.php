@@ -72,13 +72,20 @@ class AdminRepository implements Entity {
      */
     public function insert($name, $description, $price, $quantity, $file, $idCategory) {
 
-        $request = new DataBaseQuery();
+        /**
+         * A METTRE DANS LE RAPPORT
+         * EVITER LES INJECTIONS SQL
+        */
+        if(!str_contains($name, "'") && !str_contains($description, "'") && !str_contains($price, "'") && !str_contains($quantity, "'")){
+            
+            $request = new DataBaseQuery();
 
-        $table = 't_product';
-        $columns = '(idProduct, proName, proDescription, proPrice, proQuantity, proImage, fkCategory)';
-        $values = "(NULL, '$name', '$description', $price, $quantity, '$file', $idCategory)";
+            $table = 't_product';
+            $columns = 'idProduct, proName, proDescription, proPrice, proQuantity, proImage, fkCategory';
+            $values = "NULL, '$name', '$description', $price, $quantity, '$file', $idCategory";
 
-        return $request->insert($table, $columns, $values);
+            return $request->insert($table, $columns, $values);
+        } 
     }
 
     /**
@@ -96,13 +103,19 @@ class AdminRepository implements Entity {
      */
     public function update($name, $description, $price, $quantity, $file, $idCategory, $idProduct) {
 
-        $request = new DataBaseQuery();
+        /**
+         * A METTRE DANS LE RAPPORT
+         * EVITER LES INJECTIONS SQL
+        */
+        if(!str_contains($name, "'") && !str_contains($description, "'") && !str_contains($price, "'") && !str_contains($quantity, "'")){
+            $request = new DataBaseQuery();
 
-        $table = 't_product';
-        $columns = "proName = '$name', proDescription = '$description', proPrice = $price, proQuantity = $quantity, proImage = '$file', fkCategory = $idCategory";
-        $where = "idProduct = " . $idProduct;
+            $table = 't_product';
+            $columns = "proName = '$name', proDescription = '$description', proPrice = $price, proQuantity = $quantity, proImage = '$file', fkCategory = $idCategory";
+            $where = "idProduct = " . $idProduct;
 
-        return $request->update($table, $columns, $where);
+            return $request->update($table, $columns, $where);
+        }
     }
     
 }

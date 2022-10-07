@@ -16,11 +16,13 @@ if ($debug) {
 }
 
 include 'controller/Controller.php';
+include 'controller/OrderController.php';
 include 'controller/BasketController.php';
 include 'controller/AdminController.php';
 include 'controller/HomeController.php';
 include 'controller/LoginController.php';
 include 'controller/ShopController.php';
+include 'controller/UserController.php';
 
 date_default_timezone_set('Europe/Zurich');
 
@@ -63,6 +65,15 @@ class MainController {
                 break;
             case 'shop':
                 $link = new ShopController();
+                break;
+            case 'basket':
+                $link = new BasketController();
+                break;
+            case 'order':
+                $link = new OrderController();
+                break;
+            case 'user':
+                $link = new UserController();
                 break;
             default:
                 $link = new HomeController();

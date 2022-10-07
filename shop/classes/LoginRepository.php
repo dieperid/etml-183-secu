@@ -56,18 +56,19 @@ class LoginRepository implements Entity {
      */
     public function login($login, $password) {
 
+        // Ajout d'un time sleep pour ralentir le nombre de connexion
+        sleep(1);
+
         $result = $this->findOne($login);
 
         if(isset($result) && count($result)>0){
-
-        	if(password_verify($password, $result[0]['usePassword'])){
-		        $_SESSION['right'] = $result[0]['useRight'];
-		        $connect = true;
-	        } else {
-		        $_SESSION['right'] = null;
-		        $connect = false;
-	        }
-
+            if(password_verify($password, $result[0]['usePassword'])){
+                $_SESSION['right'] = $result[0]['useRight'];
+                $connect = true;
+            } else {
+                $_SESSION['right'] = null;
+                $connect = false;
+            }
         } else {
             $_SESSION['right'] = null;
             $connect = false;

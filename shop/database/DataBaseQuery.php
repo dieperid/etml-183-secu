@@ -87,7 +87,7 @@ class DataBaseQuery
      */
     public function insert($table, $columns, $values) {
 
-        $query = 'INSERT INTO ' . $table . ' ' . $columns . " VALUES " . $values ;
+        $query = 'INSERT INTO ' . $table . ' (' . $columns . ") VALUES (" . $values .")" ;
 
         $req = $this->connection->prepare($query);
 
@@ -121,5 +121,13 @@ class DataBaseQuery
 
         $req = $this->connection->prepare($query);
         return $req->execute();
+    }
+
+    /**
+     * Method to get the last id insert
+     */
+    public function getLastId(){
+
+        return $this->connection->lastInsertId();
     }
 }
