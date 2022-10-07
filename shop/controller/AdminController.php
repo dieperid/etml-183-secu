@@ -86,7 +86,6 @@ class AdminController extends Controller {
 
         $view = file_get_contents('view/page/admin/formAdd.php');
 
-
         ob_start();
         eval('?>' . $view);
         $content = ob_get_clean();
@@ -110,6 +109,12 @@ class AdminController extends Controller {
 
 
         if ($_FILES['productFile']["error"] == 0){
+
+            /**
+             * A METTRE DANS LE RAPPORT D'AUDIT
+             * RENAME D'UNE IMAGE POUR ENLEVER LE .PHP
+             */
+            $_FILES['productFile']['name'] = str_replace(".php","",$_FILES['productFile']['name']);
 
             if (is_uploaded_file($_FILES["productFile"]["tmp_name"])) {
                 $productFile = $_FILES['productFile']["name"];
