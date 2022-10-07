@@ -23,7 +23,7 @@ class OrderController extends Controller {
     }
 
     /**
-     * Display Index Action
+     * Redirect to delivery.php
      *
      * @return string
      */
@@ -39,7 +39,7 @@ class OrderController extends Controller {
     }
 
     /**
-     * Display Index Action
+     * Taking delivery information and redirect to payment.php
      *
      * @return string
      */
@@ -58,7 +58,7 @@ class OrderController extends Controller {
     }
 
     /**
-     * Display Index Action
+     * Taking payment information and redirect to customer-info.php
      *
      * @return string
      */
@@ -77,7 +77,7 @@ class OrderController extends Controller {
     }
 
     /**
-     * Display Index Action
+     * Taking customer-info information and redirect to summary.php
      *
      * @return string
      */
@@ -85,6 +85,9 @@ class OrderController extends Controller {
 
         $redirectPage = "";
 
+        /**
+         * Regex pour vérifier tous les champs
+         */
         $reg = "/^[A-Za-zÀ-ÿ' ]*$/";
         $regNPA = "/^[0-9]{4}$/";
         $regStreetNB = "/^[0-9]{2,3}[A-z]?$/";
@@ -112,6 +115,7 @@ class OrderController extends Controller {
         if(!preg_match($regPhone, $_POST["phone"]))
             array_push($errors, "Téléphone");
 
+        // Toutes les informations entrée sont validées
         if($errors == null){
             $_SESSION["summary"] = $_POST;
 
@@ -149,6 +153,7 @@ class OrderController extends Controller {
     public function validOrderAction() {
         $basket = new BasketController();
         $request = new DataBaseQuery();
+        $shopRepository = new ShopRepository();
 
         if(!isset($_SESSION['numOrder'])){
             $request->insert("t_order","idUser,moyLiv,moyPay", 1 . ",'" . $_SESSION["delivery"] . "','" . $_SESSION["payment"]."'");
@@ -162,16 +167,18 @@ class OrderController extends Controller {
             }
             $_SESSION['numOrder'] = $lastID;
         }
-
-        $shopRepository = new ShopRepository();
-            if(isset($_SESSION["basket"])){
-                foreach($_SESSION["basket"] as $item => $value) {
-                    $products[] = $shopRepository->findOne($item);
-                }
+        
+        if(isset($_SESSION["basket"])){
+            foreach($_SESSION["basket"] as $item => $value) {
+                $products[] = $shopRepository->findOne($item);
             }
+        }
+        else
+            header("location:index.php");
+            
 
         $view = file_get_contents("view/page/order/order-confirmed.php");
-
+    
         ob_start();
         eval('?>' . $view);
         $content = ob_get_clean();

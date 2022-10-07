@@ -58,7 +58,7 @@ class BasketController extends Controller {
     }
 
     /**
-     * Display Detail Action
+     * Method to find an item
      *
      * @return string
      */
