@@ -1,7 +1,13 @@
 <nav>
     <ul class="nav nav-justified">
         <li><a href="index.php?controller=shop&action=list">Shop</a></li>
-        <li><a href="index.php?controller=basket&action=find">Votre panier</a></li>
+        <li><a href="index.php?controller=basket&action=find">Votre panier
+            <?php 
+            if(isset($_SESSION['total']) && $_SESSION['total'] > 0) { 
+                echo '('.$_SESSION['total'] .')';
+                } 
+            ?>
+            </a></li>
         <?php
         if(isset($_SESSION['right'])){
             ?>

@@ -148,15 +148,37 @@ class OrderController extends Controller {
     }
 
     /**
+     * Method to display the card payment
+     */
+    public function cardPaymentAction(){
+        $view = file_get_contents("view/page/order/card-payment.php");
+    
+        ob_start();
+        eval('?>' . $view);
+        $content = ob_get_clean();
+
+        return $content;
+    }
+
+    /**
      * Method to valid the order
      */
     public function validOrderAction() {
         $basket = new BasketController();
         $request = new DataBaseQuery();
         $shopRepository = new ShopRepository();
+        $_SESSION['ordPaid'] = 'No';
 
         if(!isset($_SESSION['numOrder'])){
-            $request->insert("t_order","idUser,moyLiv,moyPay", 1 . ",'" . $_SESSION["delivery"] . "','" . $_SESSION["payment"]."'");
+            // Check si il paie par carte de crédit
+            if($_SESSION['payment'] == 'CARD'){
+                $_SESSION['ordPaid'] = 'Yes';
+            }
+            else{
+                $_SESSION['ordPaid'] = 'No';
+            }
+
+            $request->insert("t_order","idUser,moyLiv,moyPay,ordPaid", 1 . ",'" . $_SESSION["delivery"] . "','" . $_SESSION["payment"]."','" . $_SESSION["ordPaid"] . "'");
 
             // Récupération du dernier ID insérer
             $lastID = $request->getLastId();
@@ -184,6 +206,7 @@ class OrderController extends Controller {
         $content = ob_get_clean();
 
         $basket->clearBasket();
+        $_SESSION['total'] = 0;
         return $content;
     }
 }

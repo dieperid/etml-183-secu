@@ -21,6 +21,16 @@
 				if($_SESSION["payment"] == "CARD")
 					echo 'Carte de crédit';
 			?></p>
+		<p>Statut de paiement:
+			<?php
+				if($_SESSION['ordPaid'] == 'Yes'){
+					echo 'Payé';
+				}
+				else{
+					echo 'Non payé';
+				}
+			?>
+		</p>
 	</div>
 
 	<p><?= $_SESSION["summary"]["title"] ?></p>
@@ -49,13 +59,23 @@
 	$total = 0;
 
 	foreach($products as $product){
+		// Affichage du rabais dans le panier
+		if($product[0]['proRabChf'] != 0){
+			$productPrice = $product[0]['proPrice'] - $product[0]['proRabChf'];
+		}
+		else if($product[0]['proRabPourcent'] != 0){
+			$productPrice = $product[0]['proPrice'] - ($product[0]['proPrice'] * $product[0]['proRabPourcent'] / 100);
+		}
+		else{
+			$productPrice = $product[0]['proPrice'];
+		}
         echo '<tr>
             <td>'. $product[0]['proName'] .'</td>
-            <td> CHF '. number_format($product[0]['proPrice'],2) .'</td>
+            <td> CHF '. number_format($productPrice,2) .'</td>
             <td>'. $_SESSION["basket"][$product[0]['idProduct']]. '</td>
-            <td> CHF '. bcmul($_SESSION["basket"][$product[0]['idProduct']],$product[0]['proPrice'],2) . '</td>
+            <td> CHF '. bcmul($_SESSION["basket"][$product[0]['idProduct']],$productPrice,2) . '</td>
             </tr>';
-        $total += bcmul($_SESSION["basket"][$product[0]['idProduct']], $product[0]['proPrice'],2);
+        $total += bcmul($_SESSION["basket"][$product[0]['idProduct']], $productPrice,2);
     }
 
 	if($_SESSION['delivery'] == 'POSTE'){

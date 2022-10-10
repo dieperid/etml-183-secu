@@ -42,6 +42,27 @@ class BasketController extends Controller {
     }
 
     /**
+     * Method to add item to the basket and redirect to the delivery choice
+     *
+     * @return string
+     */
+    private function addToBasketAndRedirectAction() {
+ 
+        if(!isset($_SESSION["basket"]))
+            $_SESSION["basket"] = [];
+        if(isset($_SESSION["basket"][$_GET['id']])){
+            if($_SESSION["basket"][$_GET['id']] < $_GET['quant']){
+                $_SESSION["basket"][$_GET['id']]++;
+                echo 'Ajouté';
+            }
+        }
+        else
+            $_SESSION["basket"] += [$_GET["id"] => 1];
+
+        header("location: index.php?controller=order&action=delivery");
+    }
+
+    /**
      * Display Index Action
      *
      * @return string

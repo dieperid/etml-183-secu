@@ -70,7 +70,7 @@ class AdminRepository implements Entity {
      *
      * @return bool|string
      */
-    public function insert($name, $description, $price, $quantity, $file, $idCategory) {
+    public function insert($name, $description, $price, $quantity, $file, $rabChf, $rabPourcent, $idCategory) {
 
         /**
          * A METTRE DANS LE RAPPORT
@@ -81,10 +81,10 @@ class AdminRepository implements Entity {
             $request = new DataBaseQuery();
 
             $table = 't_product';
-            $columns = 'idProduct, proName, proDescription, proPrice, proQuantity, proImage, fkCategory';
-            $values = "NULL, '$name', '$description', $price, $quantity, '$file', $idCategory";
+            $columns = 'idProduct, proName, proDescription, proPrice, proQuantity, proRabChf, proRabPourcent, proImage, fkCategory';
+            $val = "NULL" .",'". $name ."','". $description ."',". $price .",". $quantity .",". $rabChf .",". $rabPourcent .",'". $file ."'," . $idCategory;
 
-            return $request->insert($table, $columns, $values);
+            return $request->insert($table, $columns, $val);
         } 
     }
 
@@ -101,7 +101,7 @@ class AdminRepository implements Entity {
      *
      * @return bool
      */
-    public function update($name, $description, $price, $quantity, $file, $idCategory, $idProduct) {
+    public function update($name, $description, $price, $quantity, $file, $rabChf, $rabPourcent, $idCategory, $idProduct) {
 
         /**
          * A METTRE DANS LE RAPPORT
@@ -111,7 +111,7 @@ class AdminRepository implements Entity {
             $request = new DataBaseQuery();
 
             $table = 't_product';
-            $columns = "proName = '$name', proDescription = '$description', proPrice = $price, proQuantity = $quantity, proImage = '$file', fkCategory = $idCategory";
+            $columns = "proName = '$name', proDescription = '$description', proPrice = $price, proQuantity = $quantity, proImage = '$file', proRabChf = '$rabChf', proRabPourcent = '$rabPourcent', fkCategory = $idCategory";
             $where = "idProduct = " . $idProduct;
 
             return $request->update($table, $columns, $where);

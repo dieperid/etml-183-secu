@@ -37,6 +37,14 @@
 					</select>
 				</div>
 				<div class="form-group">
+					<label for="productRabaisChf">Rabais CHF</label>
+					<input name="productRabaisChf" type="text" class="form-control" id="productRabaisChf" value="<?php echo $product[0]['proRabChf']; ?>"></input>
+				</div>
+				<div class="form-group">
+					<label for="productRabaisPourcent">Pourcentage de rabais</label>
+					<input name="productRabaisPourcent" type="text" class="form-control" id="productRabaisPourcent" value="<?php echo $product[0]['proRabPourcent']; ?>"></input>
+				</div>
+				<div class="form-group">
 					<label for="productFile">Image du produit</label>
 					<input name="productFile" type="file" id="productFile">
 				</div>

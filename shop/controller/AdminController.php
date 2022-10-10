@@ -105,6 +105,8 @@ class AdminController extends Controller {
         $productPrice = $_POST['productPrice'];
         $productQuantity = $_POST['productQuantity'];
         $idCategory = $_POST['productCategory'];
+        $productRabChf = $_POST['productRabaisChf'];
+        $productRabPourcent = $_POST['productRabaisPourcent'];
         $targetDirectory = 'resources/image/';
 
 
@@ -132,7 +134,7 @@ class AdminController extends Controller {
         }
 
         $adminRepository = new AdminRepository();
-        $result = $adminRepository->insert($productName, $productDescription, $productPrice, $productQuantity, $productFile, $idCategory);
+        $result = $adminRepository->insert($productName, $productDescription, $productPrice, $productQuantity, $productFile, $productRabChf, $productRabPourcent, $idCategory);
 
         $text = "";
 
@@ -187,6 +189,8 @@ class AdminController extends Controller {
         $productPrice = $_POST['productPrice'];
         $productQuantity = $_POST['productQuantity'];
         $idCategory = $_POST['productCategory'];
+        $productRabChf = $_POST['productRabaisChf'];
+        $productRabPourcent = $_POST['productRabaisPourcent'];
         $targetDirectory = 'resources/image/';
 
 
@@ -208,7 +212,7 @@ class AdminController extends Controller {
         }
 
         $adminRepository = new AdminRepository();
-        $result = $adminRepository->update($productName, $productDescription, $productPrice, $productQuantity, $productFile, $idCategory, $idProduct);
+        $result = $adminRepository->update($productName, $productDescription, $productPrice, $productQuantity, $productFile, $productRabChf, $productRabPourcent, $idCategory, $idProduct);
 
         $text = "";
 
