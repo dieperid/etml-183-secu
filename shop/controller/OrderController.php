@@ -163,7 +163,7 @@ class OrderController extends Controller {
 
             foreach($_SESSION['basket'] as $item => $value){
                 $request->insert("t_ordered","fkOrder, fkProduct, itemQuantity", $lastID .",". $item .",". $value);
-                $request->update("t_product","proQuantity = proQuantity - 1","idProduct = $item");
+                $request->update("t_product","proQuantity = proQuantity - $value","idProduct = $item");
             }
             $_SESSION['numOrder'] = $lastID;
         }
