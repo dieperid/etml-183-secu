@@ -21,7 +21,7 @@ class BasketController extends Controller {
     }
 
      /**
-     * Display Index Action
+     * Method to add item to the basket
      *
      * @return string
      */
