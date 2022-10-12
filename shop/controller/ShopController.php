@@ -55,7 +55,22 @@ class ShopController extends Controller {
     private function detailAction() {
 
         $shopRepository = new ShopRepository();
-        $product = $shopRepository->findOne($_GET['id']);
+
+        //Check if id in URL is valid
+        $ids = $shopRepository->GetAllID();
+        $error = true;
+
+        for($i = 0; $i < count($ids); $i++){
+            if($ids[$i]['idProduct'] == $_GET['id']){
+                $error = false;
+            }
+        }
+        if($error){
+            $product = $shopRepository->findOne(1);
+        }
+        else{
+            $product = $shopRepository->findOne($_GET['id']);
+        }
 
         $view = file_get_contents('view/page/shop/detail.php');
 

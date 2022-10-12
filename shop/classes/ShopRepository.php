@@ -26,6 +26,22 @@ class ShopRepository implements Entity {
         return $request->select($table, $columns, $where);
 
     }
+    
+    /**
+     * Find all entries
+     *
+     * @return array|resource
+     */
+    public function GetAllID() {
+
+        $table = 't_product as p';
+        $columns = 'idProduct';
+        $where =  '';
+
+        $request =  new DataBaseQuery();
+
+        return $request->select($table, $columns, $where);
+    }
 
     /**
      * Find One entry
