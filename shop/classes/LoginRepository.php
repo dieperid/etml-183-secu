@@ -61,6 +61,10 @@ class LoginRepository implements Entity {
 
         $result = $this->findOne($login);
 
+        if(strlen($password) < 8){
+            return false;
+        }
+        
         if(isset($result) && count($result)>0){
             if(password_verify($password, $result[0]['usePassword'])){
                 $_SESSION['right'] = $result[0]['useRight'];
