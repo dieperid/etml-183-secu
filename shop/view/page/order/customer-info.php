@@ -12,7 +12,8 @@
         <input type="text" id="locality" name="locality" value="" placeholder="Localité" required><br><br>
         <input type="email" id="mail" name="mail" value="" placeholder="Adresse mail" required>
         <input type="text" id="phone" name="phone" value="" placeholder="Téléphone" required><br><br>
-		<input class="btn btn-default command" type="submit" value="Suivant">
+		<input type="hidden" name="csrf-token" value="CIwNZNlR4XbisJF39I8yWnWX9wX4WFoz" />
+        <input class="btn btn-default command" type="submit" value="Suivant">
 	</form>
 	</div>
 </div>
